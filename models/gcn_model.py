@@ -61,7 +61,7 @@ class ResidualGatedGCNModel(nn.Module):
         """
         # Node and edge embedding
         x = self.nodes_coord_embedding(x_nodes_coord)  # B x V x H
-        e_vals = self.edges_values_embedding(x_edges_values.unsqueeze(3))  # B x V x V x H
+        e_vals = self.edges_values_embedding(x_edges_values.unsqueeze(3).contiguous())  # B x V x V x H
         e_tags = self.edges_embedding(x_edges)  # B x V x V x H
         e = torch.cat((e_vals, e_tags), dim=3)
         # GCN layers
